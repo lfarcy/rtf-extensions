@@ -1,0 +1,75 @@
+
+Description
+-----------
+RTF-Extensions is a Ruby library that adds a few useful extensions to the
+excellent Ruby RTF package originally developed by Peter Wood.
+
+Features
+--------
+RTF-Extensions has two main interests for Ruby developers who write code for
+generating RTF documents.
+
+  1. It can handle character strings encoded in UTF-8 and generate RTF documents
+     that preserve those Unicode characters.
+  2. It offers a facility to add hyperlinks to a RTF document.
+
+RTF-Extensions is NOT a replacement for Ruby RTF. It comes as an addition and
+shall be used on top of the original Ruby RTF.
+
+How to install RTF-Extensions
+-----------------------------
+First you'll have to install Ruby RTF. The simpliest way is to get it as a gem
+
+  sudo gem install rtf
+
+Since RTF-Extensions is not available (yet) as a gem, you have to get a copy of
+the few Ruby files it's made up of. The simpliest way is to download the archive
+from the homepage of the project on GitHub.
+
+You can also clone the git repository.
+
+  git clone git@github.com:lfarcy/rtf-extensions.git
+
+Finally, make sure that this copy is on your load path. For instance, in a Rails
+application, copy the rtf/ sub-directory in RAILS_ROOT/lib.
+
+How to use RTF-Extensions
+-------------------------
+Here's a typical code snippet that shows how to use it.
+
+  # load Ruby RTF first
+  require 'rtf'
+  # then load extensions
+  require 'rtf/utf8'
+  require 'rtf/hyperlink'
+  
+  doc = RTF::Document.new
+  
+  # hyperlink example
+  doc.paragraph() do |p|
+    p << "Visit "
+    p.hyperlink('http://www.google.com', 'Google')
+    p << " and start searching the web."
+  end
+  
+  # utf8 - works only if the Ruby script if UTF8 encoded itself...
+  utf8_string = "â鋸"
+  doc.paragraph do |p|
+    p << "A UTF-8 encoded string : #{utf8_string}"
+  end
+  
+  File.open('my_document.rtf') { |file| file.write(doc.to_rtf) }
+
+License
+-------
+Licensed under the Mozilla Public license 1.1 (just as Ruby RTF used to be).
+http://www.mozilla.org/MPL/MPL-1.1.html
+
+Copyright © 2009: Laurent Farcy (laurent [dot] farcy [at] argyl [dot] fr)
+
+Acknowledgement
+---------------
+  o Peter Wood for its excellent Ruby RTF package.
+    http://ruby-rtf.rubyforge.org/
+  o Steve Quinlan for his help on ramping up with Ruby RTF.
+ 
