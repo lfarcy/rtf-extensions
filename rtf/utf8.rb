@@ -5,7 +5,7 @@ module RTF
     # method escapes any special sequences that appear in the text.
     def to_rtf
       _text = @text || ''
-      _text.gsub("{", "\\{").gsub("}", "\\}").gsub("\\", "\\\\")
+      _text = _text.gsub("\\", "\\\\\\").gsub("{", "\\{").gsub("}", "\\}")
       _text.unpack('U*').map { |n| n < 128 ? n.chr : n < 256 ? "\\'#{n.to_s(16)}" : "\\u#{n}\\'3f" }.join('')
     end
   end
